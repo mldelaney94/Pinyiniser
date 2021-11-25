@@ -1,0 +1,3 @@
+The order doesn't really matter
+You will have to rename the file to cedict_ts_numerals.u8 though
+and remove the copyright info at the top
