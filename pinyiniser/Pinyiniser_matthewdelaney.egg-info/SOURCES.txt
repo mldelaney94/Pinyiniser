@@ -1,0 +1,8 @@
+LICENSE.txt
+README.md
+pyproject.toml
+setup.cfg
+pinyiniser/Pinyiniser_matthewdelaney.egg-info/PKG-INFO
+pinyiniser/Pinyiniser_matthewdelaney.egg-info/SOURCES.txt
+pinyiniser/Pinyiniser_matthewdelaney.egg-info/dependency_links.txt
+pinyiniser/Pinyiniser_matthewdelaney.egg-info/top_level.txt

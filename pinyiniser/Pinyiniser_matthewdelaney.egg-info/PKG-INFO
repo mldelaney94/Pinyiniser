@@ -1,0 +1,20 @@
+Metadata-Version: 2.1
+Name: Pinyiniser-matthewdelaney
+Version: 0.1
+Summary: Adds pinyin to lists of chinese strings (utf-8 only)
+Home-page: https://github.com/mldelaney94/Pinyiniser
+Author: Matthew Delaney
+Author-email: mldelaney94@gmail.com
+License: UNKNOWN
+Project-URL: Bug Tracker, https://github.com/mldelaney94/Pinyiniser
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+
+Creates pinyin from lists of chinese strings
+
+
