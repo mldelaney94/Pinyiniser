@@ -1,0 +1,8 @@
+LICENSE.txt
+README.md
+pyproject.toml
+setup.cfg
+pinyiniser/Pinyiniser.egg-info/PKG-INFO
+pinyiniser/Pinyiniser.egg-info/SOURCES.txt
+pinyiniser/Pinyiniser.egg-info/dependency_links.txt
+pinyiniser/Pinyiniser.egg-info/top_level.txt

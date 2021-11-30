@@ -1,0 +1,12 @@
+package:
+  name: pinyiniser
+  version: 0.2
+
+build:
+  number: 1
+
+requirements:
+  run:
+    - python
+about:
+  summary: This is a pinyiniser addon
