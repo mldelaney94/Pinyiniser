@@ -1,5 +1,6 @@
 import jieba
 import re
+from .materials import cc_cedict_parser_opt
 
 do_not_parse_set = {'？', '，', '！', '。', '；', '“', '”', '：', '–', '—', '＊',
         '…', '、', '～', '－', '（', '）', '─', '＜', '＞', '．', '《', '》',

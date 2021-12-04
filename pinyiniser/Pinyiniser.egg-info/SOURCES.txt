@@ -1,4 +1,5 @@
 LICENSE.txt
+MANIFEST.in
 README.md
 pyproject.toml
 setup.cfg
@@ -6,3 +7,15 @@ pinyiniser/Pinyiniser.egg-info/PKG-INFO
 pinyiniser/Pinyiniser.egg-info/SOURCES.txt
 pinyiniser/Pinyiniser.egg-info/dependency_links.txt
 pinyiniser/Pinyiniser.egg-info/top_level.txt
+pinyiniser/materials/cc_cedict_parser.py
+pinyiniser/materials/cc_cedict_parser_opt.py
+pinyiniser/materials/cedict_ts_no_space_numerals.u8
+pinyiniser/materials/cedict_ts_numerals.u8
+pinyiniser/materials/cedict_ts_pinyin.u8
+pinyiniser/materials/howto.txt
+pinyiniser/materials/jieba_dict_large.txt
+pinyiniser/materials/numeralise.py
+pinyiniser/materials/pinyin_skip.py
+pinyiniser/materials/remove_spaces.py
+pinyiniser/materials/__pycache__/cc_cedict_parser_opt.cpython-39.pyc
+pinyiniser/materials/__pycache__/pinyin_skip.cpython-39.pyc
