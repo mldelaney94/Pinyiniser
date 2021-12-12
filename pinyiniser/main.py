@@ -1,11 +1,12 @@
 import jieba
 import re
-from .materials import cc_cedict_parser_opt
+from materials import cc_cedict_parser_opt
 
 do_not_parse_set = {'？', '，', '！', '。', '；', '“', '”', '：', '–', '—', '＊',
         '…', '、', '～', '－', '（', '）', '─', '＜', '＞', '．', '《', '》',
-        '％', '·', '>', '’'}
-
+        '％', '·', '<', '>', '’', '‘', '+', '/', '~', '!', '@', '#', '$',
+        '%', '^', '&', '*', '(', ')', '_', '-', '=', '\\', '{', '}', '|', ';',
+        '\'', '"', ',', '.', '?'}
 def write_lines(lines, path):
     with open(path, 'w+') as f:
         i = 1
@@ -76,3 +77,4 @@ def parse_dict(path):
 
 if __name__ == '__main__':
     ace = read_lines('testwrite.txt')
+    print(ace)
