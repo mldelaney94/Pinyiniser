@@ -1,6 +1,6 @@
 package:
   name: pinyiniser
-  version: 0.2
+  version: 0.7
 
 build:
   number: 1
