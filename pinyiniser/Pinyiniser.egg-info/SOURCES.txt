@@ -7,8 +7,6 @@ pinyiniser/Pinyiniser.egg-info/PKG-INFO
 pinyiniser/Pinyiniser.egg-info/SOURCES.txt
 pinyiniser/Pinyiniser.egg-info/dependency_links.txt
 pinyiniser/Pinyiniser.egg-info/top_level.txt
-pinyiniser/materials/.cc_cedict_parser.py.swp
-pinyiniser/materials/.pinyin_skip.py.swp
 pinyiniser/materials/cc_cedict_parser.py
 pinyiniser/materials/cedict_ts_no_space_numerals.u8
 pinyiniser/materials/cedict_ts_pinyin.u8
