@@ -5,9 +5,8 @@ from .pinyin_skip import skip
 #define functions
 
 #builds a dictionary with a simp character as the key
-#the key accesses a dictionary of attributes - pinyin, and english definition
+#the key accesses a dictionary of attributes - pinyin only in this case
 #dictionary[key]['pinyin'] accesses a list
-#dictionary[key]['english'] also accesses a list
 def parse_lines(lines):
     dictionary = {}
     for line in lines:
@@ -46,3 +45,4 @@ def parse_dict(path):
 
 if __name__ == "__main__":
     parsed_dict = parse_dict('cedict_ts_no_space_numerals.u8')
+    print(parsed_dict['说'])
