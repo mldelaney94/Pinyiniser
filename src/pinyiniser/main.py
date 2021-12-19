@@ -1,19 +1,18 @@
 import jieba
-import re
-from data import cc_cedict_parser
-import os
 import pinyiniser
+import os
 from pathlib import Path
 
 curr_dir = '\\'.join(pinyiniser.__file__.split('\\')[0:-1])
-numeral_dict = os.path.join(curr_dir, Path('/materials/cedict_ts_no_space_numerals.u8'))
-diacritic_dict = os.path.join(curr_dir, Path('/materials/cedict_ts_pinyin.u8'))
+numeral_dict = os.path.join(curr_dir, Path('./data/cedict_ts_no_space_numerals.u8'))
+diacritic_dict = os.path.join(curr_dir, Path('./data/cedict_ts_pinyin.u8'))
 
 do_not_parse_set = {'？', '，', '！', '。', '；', '“', '”', '：', '–', '—', '＊',
         '…', '、', '～', '－', '（', '）', '─', '＜', '＞', '．', '《', '》',
         '％', '·', '<', '>', '’', '‘', '+', '/', '~', '!', '@', '#', '$',
         '%', '^', '&', '*', '(', ')', '_', '-', '=', '\\', '{', '}', '|', ';',
-        '\'', '"', ',', '.', '?', '`'}
+        '\'', '"', ',', '.'}
+
 def write_lines(lines, path):
     with open(path, 'w+') as f:
         i = 1
@@ -76,13 +75,14 @@ def get_pinyin(zh_string, zh_dict):
 
 def get_dictionary(numeric=False):
     if numeric == True:
-        return parse_dict(numeral_dict)
-    return parse_dict(diacritic_dict)
+        return parse_dict('./materials/cedict_ts_no_space_numerals.u8') 
+    return parse_dict('./materials/cedict_ts_pinyin.u8')
 
 def parse_dict(path):
     return cc_cedict_parser.parse_dict(path)
 
 if __name__ == '__main__':
-    #ace = read_lines('testwrite.txt')
-    #print(ace)
-    get_dictionary(False)
+    from data import cc_cedict_parser
+    print(diacritic_dict)
+else:
+    from .data import cc_cedict_parser

@@ -1,6 +1,5 @@
 """Only gets pinyin"""
 import sys
-from pinyin_skip import skip
 
 #define functions
 
@@ -44,5 +43,6 @@ def parse_dict(path):
         return parse_lines(lines)
 
 if __name__ == "__main__":
-    parsed_dict = parse_dict('cedict_ts_no_space_numerals.u8')
-    print(parsed_dict['说'])
+    from pinyin_skip import skip
+else:
+    from .pinyin_skip import skip
