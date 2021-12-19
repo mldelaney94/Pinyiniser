@@ -56,9 +56,9 @@ def add_pinyin(zh_string, zh_dict, special_pinyin={},
     return zh_string + '\n'
 
 def get_pinyin(zh_string, zh_dict, do_not_parse):
-    line = tuple(jieba.cut(zh_string, cut_all=False))
+    line_segs = tuple(jieba.cut(zh_string, cut_all=False))
     pinyin = []
-    for word in line:
+    for word in line_segs:
         if word in zh_dict:
             pinyin.append(zh_dict[word]['pinyin'])
         else:
