@@ -55,7 +55,7 @@ False for diacritics - shuō
 Personally I prefer numerals as it makes it harder to read, but depending on your application this may not be
 what you want.
 
-## get_pinyin(zh_string, zh_dict, do_not_parse)
+## pyer.get_pinyin(zh_string, zh_dict, do_not_parse)
 
 If you instead want to just get the pinyin and then edit the results together yourself,
 you can.
