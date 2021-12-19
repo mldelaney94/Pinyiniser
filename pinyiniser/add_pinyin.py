@@ -1,11 +1,12 @@
 import jieba
-from materials import cc_cedict_parser_opt
-import re
+from materials import cc_cedict_parser
 
 do_not_parse_set = {'？', '，', '！', '。', '；', '“', '”', '：', '–', '—', '＊',
         '…', '、', '～', '－', '（', '）', '─', '＜', '＞', '．', '《', '》',
-        '％', '·', '>', '’'}
-
+        '％', '·', '<', '>', '’', '‘', '+', '/', '~', '!', '@', '#', '$',
+        '%', '^', '&', '*', '(', ')', '_', '-', '=', '\\', '{', '}', '|', ';',
+        '\'', '"', ',', '.'}
+~!@#$%^&*()_+-=\[\]{}\\|;:'",\<.\>/?
 def write_lines(lines, path):
     with open(path, 'w+') as f:
         i = 1
@@ -18,11 +19,10 @@ def write_lines(lines, path):
 def read_lines(path):
     with open(path, 'r') as f:
         lines = []
-        pattern = re.compile('Line\s\d:\\n')
         string_to_add = ''
         first = True
         for line in f.readlines():
-            if pattern.match(line):
+            if 'Line' in line:
                 if first:
                     first = False
                     continue
@@ -69,19 +69,12 @@ def get_pinyin(zh_string, zh_dict):
 
 def get_dictionary(numeric=False):
     if numeric == True:
-        return parse_dict('materials/cedict_ts_no_space_numerals.u8') 
-    return parse_dict('materials/cedict_ts_pinyin.u8')
+        return parse_dict('./materials/cedict_ts_no_space_numerals.u8') 
+    return parse_dict('./materials/cedict_ts_pinyin.u8')
 
 def parse_dict(path):
     return cc_cedict_parser_opt.parse_dict(path)
 
 if __name__ == '__main__':
-    jieba.set_dictionary('materials/jieba_dict_large.txt')
-    zh_dict = get_dictionary()
-    lines = ['你好啊', '我很高兴']
-    lines_with_pinyin = []
-    for line in lines:
-        lines_with_pinyin.append(add_pinyin(line, zh_dict))
-    write_lines(lines_with_pinyin, 'hello.txt')
-    lines = read_lines('hello.txt')
-    print(lines)
+    ace = read_lines('testwrite.txt')
+    print(ace)

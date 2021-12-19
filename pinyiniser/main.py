@@ -1,6 +1,6 @@
 import jieba
 import re
-from materials import cc_cedict_parser
+from .materials import cc_cedict_parser
 import os
 import pinyiniser
 from pathlib import Path

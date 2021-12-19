@@ -1,5 +1,5 @@
-from pinyiniser import add_pinyin
-from pinyiniser import write_lines
-from pinyiniser import read_lines
-from pinyiniser import get_dictionary
+import add_pinyin
+import write_lines
+import read_lines
+import get_dictionary
 
