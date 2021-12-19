@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 
 curr_dir = '\\'.join(pinyiniser.__file__.split('\\')[0:-1])
-numeral_dict = os.path.join(curr_dir, Path('./data/cedict_ts_no_space_numerals.u8'))
+numeric_dict = os.path.join(curr_dir, Path('./data/cedict_ts_no_space_numerals.u8'))
 diacritic_dict = os.path.join(curr_dir, Path('./data/cedict_ts_pinyin.u8'))
 
 do_not_parse_set = {'？', '，', '！', '。', '；', '“', '”', '：', '–', '—', '＊',
@@ -43,7 +43,7 @@ def add_pinyin(zh_string, zh_dict, special_pinyin={},
     if zh_string in special_pinyin:
         return zh_string + '\n' + special_pinyin[zh_string] + '\n'
     
-    pinyin = get_pinyin(zh_string, zh_dict)
+    pinyin = get_pinyin(zh_string, zh_dict, do_not_parse)
     zh_string += '\n'
     first = True 
     for item in pinyin:
@@ -55,7 +55,7 @@ def add_pinyin(zh_string, zh_dict, special_pinyin={},
 
     return zh_string + '\n'
 
-def get_pinyin(zh_string, zh_dict):
+def get_pinyin(zh_string, zh_dict, do_not_parse):
     line = tuple(jieba.cut(zh_string, cut_all=False))
     pinyin = []
     for word in line:
@@ -75,8 +75,8 @@ def get_pinyin(zh_string, zh_dict):
 
 def get_dictionary(numeric=False):
     if numeric == True:
-        return parse_dict('./materials/cedict_ts_no_space_numerals.u8') 
-    return parse_dict('./materials/cedict_ts_pinyin.u8')
+        return parse_dict(numeric_dict)
+    return parse_dict(diacritic_dict)
 
 def parse_dict(path):
     return cc_cedict_parser.parse_dict(path)
