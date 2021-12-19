@@ -1,13 +1,13 @@
 import jieba
 import re
-from .materials import cc_cedict_parser
+from materials import cc_cedict_parser
 import os
 import pinyiniser
 from pathlib import Path
 
 curr_dir = '\\'.join(pinyiniser.__file__.split('\\')[0:-1])
-numeral_dict = os.path.join(curr_dir, Path('materials/cedict_ts_no_space_numerals.u8'))
-diacritic_dict = os.path.join(curr_dir, Path('materials/cedict_ts_pinyin.u8'))
+numeral_dict = os.path.join(curr_dir, Path('/materials/cedict_ts_no_space_numerals.u8'))
+diacritic_dict = os.path.join(curr_dir, Path('/materials/cedict_ts_pinyin.u8'))
 
 do_not_parse_set = {'？', '，', '！', '。', '；', '“', '”', '：', '–', '—', '＊',
         '…', '、', '～', '－', '（', '）', '─', '＜', '＞', '．', '《', '》',

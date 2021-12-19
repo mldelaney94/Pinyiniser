@@ -1,6 +1,6 @@
 """Only gets pinyin"""
 import sys
-from .pinyin_skip import skip
+from pinyin_skip import skip
 
 #define functions
 
