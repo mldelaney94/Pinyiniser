@@ -1,2 +1,1 @@
-include add_pinyin.py main.py
-recursive-include pinyiniser/* cedict* cc* pinyin* jieba*
+recursive-include src/* cedict* cc* pinyin* jieba*
