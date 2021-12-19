@@ -49,7 +49,7 @@ with the original do_not_parse_set
 
 `zh_dict = pyer.get_dictionary(True)`
 
-True for numerals - shuo1
+True for numerals - shuo1<br/>
 False for diacritics - shuō
 
 Personally I prefer numerals as it makes it harder to read, but depending on your application this may not be
