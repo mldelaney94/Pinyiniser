@@ -54,3 +54,16 @@ False for diacritics - shuō
 
 Personally I prefer numerals as it makes it harder to read, but depending on your application this may not be
 what you want.
+
+## get_pinyin(zh_string, zh_dict, do_not_parse)
+
+If you instead want to just get the pinyin and then edit the results together yourself,
+you can.
+
+`zh_string` is just any utf-8 string of Chinese characters.
+`zh_dict` is a dictionary of dictionaries, where the first key is the
+character, and the second key is 'pinyin' e.g. `zh_dict[zh_char]['pinyin']`
+
+This is because although this library gets pinyin, it would be nice
+to allow for extensions like `zh_dict[zh_char]['english']` and other
+additions to the dictionary.
