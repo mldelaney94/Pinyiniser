@@ -1,10 +1,10 @@
-#Setup
+# Setup
 
 import pinyiniser as pyer
 
-##pyer.add_pinyin(string, dict, special, do_not_parse)
+## pyer.add_pinyin(string, dict, special, do_not_parse)
 
-###special
+### special
 special a dictionary of strings like:
 
     `{
@@ -16,7 +16,7 @@ special a dictionary of strings like:
 It will search for those strings and output the pinyin that you desire
 This is a 1:1 mapping, if the string doesn't match the left hand side exactly, it will not match
 
-###do_not_parse
+### do_not_parse
 do_not_parse is a dictionary that default looks like so:
 
 
@@ -43,7 +43,7 @@ with the original do_not_parse_set
 
 `my_do_not_parse_set = my_do_not_parse_set.union(pyer.do_not_parse_set)`
 
-###dict
+### zh_dict
 
 `zh_dict = pyer.get_dictionary(True)`
 
