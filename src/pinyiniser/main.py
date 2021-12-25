@@ -7,11 +7,20 @@ curr_dir = '\\'.join(pinyiniser.__file__.split('\\')[0:-1])
 numeric_dict = os.path.join(curr_dir, Path('./data/cedict_ts_no_space_numerals.u8'))
 diacritic_dict = os.path.join(curr_dir, Path('./data/cedict_ts_pinyin.u8'))
 
-do_not_parse_set = {'？', '，', '！', '。', '；', '“', '”', '：', '–', '—', '＊',
+do_not_parse_set = {
+        #Chinese special chars
+        '？', '，', '！', '。', '；', '“', '”', '：', '–', '—', '＊',
         '…', '、', '～', '－', '（', '）', '─', '＜', '＞', '．', '《', '》',
-        '％', '·', '<', '>', '’', '‘', '+', '/', '~', '!', '@', '#', '$',
-        '%', '^', '&', '*', '(', ')', '_', '-', '=', '\\', '{', '}', '|', ';',
-        '\'', '"', ',', '.'}
+        '％', '·', '’', '‘', '……', '【', '】',
+        #Standard special chars
+        '`', '~', '!', '@', '#', '^', '&', '*', '(', ')', '-', '_',
+        '[', ']', '{', '}', '\\', '|', ';', ':', '\'', '"', ',', '<', '.',
+        '>', '/', '?',
+        #Maths
+        '=', '+', '-', '/', '%',
+        #Currency chars
+        '$', '￥', '£', '€'
+    }
 
 def write_lines(lines, path):
     with open(path, 'w+') as f:
@@ -38,10 +47,10 @@ def read_lines(path):
                 string_to_add += line
     return lines
         
-def add_pinyin(zh_string, zh_dict, special_pinyin={},
+def add_pinyin(zh_string, zh_dict, special={},
         do_not_parse=do_not_parse_set):
-    if zh_string in special_pinyin:
-        return zh_string + '\n' + special_pinyin[zh_string] + '\n'
+    if zh_string in special:
+        return zh_string + '\n' + special[zh_string] + '\n'
     
     pinyin = get_pinyin(zh_string, zh_dict, do_not_parse)
     zh_string += '\n'

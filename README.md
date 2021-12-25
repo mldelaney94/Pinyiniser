@@ -1,11 +1,11 @@
 # Setup
 
-import pinyiniser as pyer
+`import pinyiniser as pyer`
 
 ## pyer.add_pinyin(zh_string, dict, special={}, do_not_parse=do_not_parse_set)
 
-Adds Pinyin to a utf-8 chinese string
-returns string + \n + pinyin + \n
+Adds Pinyin to a utf-8 chinese string.<br/>
+returns `string + \n + pinyin + \n`
 
 ### special
 a dictionary of strings like:
@@ -16,20 +16,26 @@ a dictionary of strings like:
         '乌蕾妮': 'Wu1lei3ni1',
     }
 
-It will search for those strings and output the pinyin that you desire
-This is a 1:1 mapping, if the string doesn't match the left hand side exactly, it will not match
+It will search for the keys and output the value of the kvp.</br>
+This is a 1:1 mapping, if the string doesn't match the left hand side exactly, it will not match.
+This could be more than just a way to map names, any string can be wholly replaces using this method
 
 ### do_not_parse
 do_not_parse is a dictionary that default looks like so:
 
-
     do_not_parse_set = {
+        #Chinese special chars
         '？', '，', '！', '。', '；', '“', '”', '：', '–', '—', '＊',
         '…', '、', '～', '－', '（', '）', '─', '＜', '＞', '．', '《', '》',
-        '％', '·', '<', '>', '’', '‘', '+', '/', '~', '!', '@', '#', '$',
-        '%', '^', '&', '*', '(', ')', '_', '-', '=', '\\', '{', '}', '|', ';',
-        '\'', '"', ',', '.'
-    }
+        '％', '·', '’', '‘', '……', '【', '】',
+        #Standard special chars
+        '`', '~', '!', '@', '#', '^', '&', '*', '(', ')', '-', '_',
+        '[', ']', '{', '}', '\\', '|', ';', ':', '\'', '"', ',', '<', '.',
+        '>', '/', '?',
+        #Maths
+        '=', '+', '-', '/', '%',
+        #Currency chars
+        '$', '￥', '£', '€'}
 
 `Jieba` returns a list of words that it has detected. For english words or punctuation, they are returned as well
 as an entry in the list.
@@ -44,7 +50,7 @@ i.e. ['ni3hao3', '.'], if we don't use this do_not_parse set, becomes:
 'ni3hao3 .', with the set: 'ni3hao3.'
 
 so in order to extend this, you can create your own do_not_parse_set (called whatever you like) and union it
-with the original do_not_parse_set
+with the original do_not_parse_set.
 
 `my_do_not_parse_set = my_do_not_parse_set.union(pyer.do_not_parse_set)`
 
@@ -65,10 +71,10 @@ character, and the second key is 'pinyin' e.g. `zh_dict[zh_char]['pinyin']`
 Any dictionary that has this set of kvp's will work, allowing you flexibility in
 what you use, so you can have a dict with English too
 `zh_dict[zh_char]['english']`
-for further processing
+for further processing.
 
 ## pyer.get_pinyin(zh_string, zh_dict, do_not_parse=do_not_parse_set)
 
-Get the pinyin as a list
+Gets pinyin as a list.
 
 `zh_string` is just any utf-8 string of Chinese characters.
