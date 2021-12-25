@@ -2,7 +2,10 @@
 
 import pinyiniser as pyer
 
-## pyer.add_pinyin(string, dict, special, do_not_parse)
+## pyer.add_pinyin(zh_string, dict, special={}, do_not_parse=do_not_parse_set)
+
+Adds Pinyin to a utf-8 chinese string
+returns string + \n + pinyin + \n
 
 ### special
 a dictionary of strings like:
@@ -31,7 +34,7 @@ do_not_parse is a dictionary that default looks like so:
 `Jieba` returns a list of words that it has detected. For english words or punctuation, they are returned as well
 as an entry in the list.
 
-We cut up the sentence using jieba to generate a list of characters, we then step through this list
+We cut up the sentence using Jieba to generate a list of characters, we then step through this list
 and add the pinyin to the sentence.
 
 we need to add spaces between the elements of the list when they are added to the sentence,
@@ -59,14 +62,13 @@ what you want.
 `zh_dict` is a dictionary of dictionaries, where the first key is the
 character, and the second key is 'pinyin' e.g. `zh_dict[zh_char]['pinyin']`
 
-This is because although this library gets pinyin, it would be nice
-to allow for extensions like 
+Any dictionary that has this set of kvp's will work, allowing you flexibility in
+what you use, so you can have a dict with English too
 `zh_dict[zh_char]['english']`
-and other additions to the dictionary.
+for further processing
 
-## pyer.get_pinyin(zh_string, zh_dict, do_not_parse)
+## pyer.get_pinyin(zh_string, zh_dict, do_not_parse=do_not_parse_set)
 
-If you instead want to just get the pinyin and then edit the results together yourself,
-you can.
+Get the pinyin as a list
 
 `zh_string` is just any utf-8 string of Chinese characters.
