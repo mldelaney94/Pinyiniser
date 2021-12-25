@@ -18,7 +18,7 @@ a dictionary of strings like:
 
 It will search for the keys and output the value of the kvp.</br>
 This is a 1:1 mapping, if the string doesn't match the left hand side exactly, it will not match.
-This could be more than just a way to map names, any string can be wholly replaces using this method
+This could be more than just a way to map names, any string can be wholly replaced using this method.
 
 ### do_not_parse
 do_not_parse is a dictionary that default looks like so:
