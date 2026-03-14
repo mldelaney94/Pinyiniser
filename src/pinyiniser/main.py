@@ -82,16 +82,15 @@ def get_pinyin(zh_string, zh_dict, do_not_parse=do_not_parse_set):
 
     return pinyin
 
-def get_dictionary(numeric=False):
-  if numeric == True:
-    return parse_dict(numeric_dict)
-  return parse_dict(diacritic_dict)
+def get_dictionary(numeric=True):
+  if numeric == False:
+    return parse_dict(diacritic_dict)
+  return parse_dict(numeric_dict)
 
 def parse_dict(path):
   return cc_cedict_parser.parse_dict(path)
 
 if __name__ == '__main__':
   from data import cc_cedict_parser
-  print(diacritic_dict)
 else:
   from .data import cc_cedict_parser
