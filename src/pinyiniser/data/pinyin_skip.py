@@ -8,7 +8,6 @@ skip = {'要 要 [yao1] ',
         '說 说 [shui4] ',
         '上 上 [shang3] ',
         '听 听 [yin3] ',
-        '還 还 [huan2] ',
         '打 打 [da2] ',
         '作 作 [zuo1] ', #workshop :(
         '都 都 [du1] '}
