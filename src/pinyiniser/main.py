@@ -47,22 +47,28 @@ def read_lines(path):
         string_to_add += line
   return lines
 
-def add_pinyin(zh_string, zh_dict, special={},
-        do_not_parse=do_not_parse_set):
-  if zh_string in special:
-    return zh_string + '\n' + special[zh_string] + '\n'
+# returns a tuple, the zh_string, and the pinyin string
+# the zh_string will be augmented with non-breaking spaces
+# around the chinese words
+def get_segments_and_pinyin(zh_string, zh_dict, do_not_parse=do_not_parse_set):
+  line_segs = tuple(jieba.cut(zh_string, cut_all=False))
 
-  pinyin = get_pinyin(zh_string, zh_dict, do_not_parse)
-  zh_string += '\n'
-  first = True 
-  for item in pinyin:
-    if item in do_not_parse or first:
-      zh_string += item
-      first = False
+  pinyin = []
+  for word in line_segs:
+    if word in zh_dict:
+      pinyin.append(zh_dict[word]['pinyin'])
     else:
-      zh_string += ' ' + item
+      if word in do_not_parse or ord(word[0]) < 255:
+        pinyin.append(word)
+      else: 
+        for character in word:
+          if character in zh_dict:
+            pinyin.append(zh_dict[character]['pinyin'])
+          else:
+            pinyin.append(character)
 
-  return zh_string + '\n'
+  return ( line_segs.join('\u200B'), pinyin )
+
 
 def get_pinyin(zh_string, zh_dict, do_not_parse=do_not_parse_set):
   line_segs = tuple(jieba.cut(zh_string, cut_all=False))

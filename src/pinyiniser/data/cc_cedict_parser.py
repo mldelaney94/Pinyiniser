@@ -1,11 +1,19 @@
-"""Only gets pinyin"""
+"""Builds a dictionary of character to pinyin
+
+  Access by:
+  [character]['pinyin']
+
+This leaves things flexible if want to have the English definition
+too
+"""
 import sys
 
-#define functions
+def parse_dict(path):
+  #make each line into a dictionary
+  with open(path, 'r') as f:
+    lines = f.readlines()
+    return parse_lines(lines)
 
-#builds a dictionary with a simp character as the key
-#the key accesses a dictionary of attributes - pinyin only in this case
-#dictionary[key]['pinyin'] accesses a list
 def parse_lines(lines):
   dictionary = {}
   for line in lines:
@@ -35,12 +43,6 @@ def add_entry(parts, dictionary):
   for key in parts:
     if key not in dictionary:
       dictionary[key] = parts[key]
-
-def parse_dict(path):
-  #make each line into a dictionary
-  with open(path, 'r') as f:
-    lines = f.readlines()
-    return parse_lines(lines)
 
 if __name__ == "__main__":
   from pinyin_skip import skip
