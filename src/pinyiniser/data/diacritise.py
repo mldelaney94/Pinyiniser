@@ -1,4 +1,3 @@
-from pinyin_skip import skip
 from pinyin_map import pinyin_map
 
 def numerals_to_diacritics ():
@@ -6,8 +5,6 @@ def numerals_to_diacritics ():
     with open('cedict_ts_diacritics.u8', 'w+') as g:
       for line in f:
         chinese, english = line.split('/', 1)
-        if chinese in skip:
-          continue
         trad, simp, pinyin = chinese.split(' ', 2)
         pinyin = prep_pinyin(pinyin)
 
