@@ -1,1 +1,1 @@
-recursive-include src/* cedict* cc* pinyin* jieba*
+recursive-include src/pinyiniser/data *.u8 *.txt *.py

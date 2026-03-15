@@ -1,6 +1,5 @@
 [build-system]
 requires = [
-    "jieba",
     "setuptools>=42",
     "wheel"
 ]

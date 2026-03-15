@@ -1,13 +1,12 @@
-import jieba
-import pinyiniser
-import os
+import rjieba
+import re
 from pathlib import Path
 
-curr_dir = '\\'.join(pinyiniser.__file__.split('\\')[0:-1])
-numeric_dict = os.path.join(curr_dir, Path('./data/cedict_ts_numerals.u8'))
-diacritic_dict = os.path.join(curr_dir, Path('./data/cedict_ts_diacritics.u8'))
+curr_dir = Path(__file__).parent
+numeric_dict = curr_dir / 'data' / 'cedict_ts_numerals.u8'
+diacritic_dict = curr_dir / 'data' / 'cedict_ts_diacritics.u8'
 
-do_not_parse_set = {
+special_tokens = {
   #Chinese special chars
   '？', '，', '！', '。', '；', '“', '”', '：', '–', '—', '＊',
   '…', '、', '～', '－', '（', '）', '─', '＜', '＞', '．', '《', '》',
@@ -22,74 +21,66 @@ do_not_parse_set = {
   '$', '￥', '£', '€'
 }
 
-def write_lines(lines, path):
-  with open(path, 'w+') as f:
-    i = 1
-    for line in lines:
-      f.write('Line ' + str(i) + ':\n')
-      f.write(line)
-      i += 1
-    f.write('Line ' + str(i) + ':\n')
+# returns a tuple, the result of calling rjieba on the string,
+# and the result of parsing that result through a dictionary,
+# word by word, to get the pinyin
+def get_segments_and_pinyin(
+  zh_string,
+  zh_dict,
+  punctuation=special_tokens
+) -> tuple[list[str], list[str]]:
+  sentence_splits = split_on_punctuation(zh_string, punctuation)
 
-def read_lines(path):
-  with open(path, 'r') as f:
-    lines = []
-    string_to_add = ''
-    first = True
-    for line in f.readlines():
-      if 'Line' in line:
-        if first:
-          first = False
-          continue
-        lines.append(string_to_add)
-        string_to_add = ''
-      else:
-        string_to_add += line
-  return lines
-
-# returns a tuple, the zh_string, and the pinyin string
-# the zh_string will be augmented with non-breaking spaces
-# around the chinese words
-def get_segments_and_pinyin(zh_string, zh_dict, do_not_parse=do_not_parse_set):
-  line_segs = tuple(jieba.cut(zh_string, cut_all=False))
-
+  token_collection = []
   pinyin = []
-  for word in line_segs:
-    if word in zh_dict:
-      pinyin.append(zh_dict[word]['pinyin'])
+  for fragment in sentence_splits:
+    if fragment not in punctuation:
+      tokens = tuple(rjieba.cut(fragment))
+      token_collection.extend(tokens)
+      pinyin.extend(get_pinyin_for_tokens(tokens, zh_dict, punctuation))
     else:
-      if word in do_not_parse or ord(word[0]) < 255:
-        pinyin.append(word)
-      else: 
-        for character in word:
-          if character in zh_dict:
-            pinyin.append(zh_dict[character]['pinyin'])
-          else:
-            pinyin.append(character)
+      token_collection.append(fragment)
+      pinyin.append(fragment)
 
-  return ( line_segs.join('\u200B'), pinyin )
+  return ( token_collection, pinyin )
 
+def get_pinyin(zh_string,
+  zh_dict,
+  punctuation=special_tokens
+) -> list[str]:
+  _, pinyin = get_segments_and_pinyin(zh_string, zh_dict, punctuation)
+  return pinyin
 
-def get_pinyin(zh_string, zh_dict, do_not_parse=do_not_parse_set):
-  line_segs = tuple(jieba.cut(zh_string, cut_all=False))
+def get_pinyin_for_tokens(
+  tokens,
+  zh_dict,
+  punctuation
+) -> list[str]:
   pinyin = []
-  for word in line_segs:
-    if word in zh_dict:
-      pinyin.append(zh_dict[word]['pinyin'])
-    else:
-      if word in do_not_parse or ord(word[0]) < 255:
-        pinyin.append(word)
-      else: 
-        for character in word:
-          if character in zh_dict:
-            pinyin.append(zh_dict[character]['pinyin'])
-          else:
-            pinyin.append(character)
+  for token in tokens:
+    if token in zh_dict:
+      pinyin.append(zh_dict[token]['pinyin'])
+    elif token in punctuation or ord(token[0]) < 255:
+      pinyin.append(token)
+    else: 
+      for character in token:
+        if character in zh_dict:
+          pinyin.append(zh_dict[character]['pinyin'])
+        else:
+          pinyin.append(character)
 
-    return pinyin
+  return pinyin
+
+def split_on_punctuation(zh_string, punctuation=special_tokens):
+  length_sorted_punctuation = sorted(punctuation, key=len, reverse=True)
+  escaped_punctuation = [re.escape(item) for item in length_sorted_punctuation]
+  split_string = re.split(f"({'|'.join(escaped_punctuation)})", zh_string)
+
+  # re.split produces empty strings if two pieces of punctuation are next to each other
+  return [s for s in split_string if s]
 
 def get_dictionary(numeric=True):
-  if numeric == False:
+  if not numeric:
     return parse_dict(diacritic_dict)
   return parse_dict(numeric_dict)
 
