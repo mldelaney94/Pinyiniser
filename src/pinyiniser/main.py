@@ -35,16 +35,17 @@ def get_segments_and_pinyin(
   zh_dict,
   punctuation=None
 ) -> tuple[list[str], list[str]]:
-  punct_set = special_tokens if punctuation is None else punctuation
+  if punctuation is None:
+    punctuation = special_tokens
   sentence_splits = split_on_punctuation(zh_string, punctuation)
 
   token_collection = []
   pinyin = []
   for fragment in sentence_splits:
-    if fragment not in punct_set:
+    if fragment not in punctuation:
       tokens = tuple(rjieba.cut(fragment))
       token_collection.extend(tokens)
-      pinyin.extend(get_pinyin_for_tokens(tokens, zh_dict, punct_set))
+      pinyin.extend(get_pinyin_for_tokens(tokens, zh_dict, punctuation))
     else:
       token_collection.append(fragment)
       pinyin.append(fragment)
@@ -78,8 +79,8 @@ def get_pinyin_for_tokens(
 
   return pinyin
 
-def split_on_punctuation(zh_string, punctuation=None):
-  if punctuation is None:
+def split_on_punctuation(zh_string, punctuation=special_tokens):
+  if punctuation is special_tokens:
     split_string = _special_tokens_pattern.split(zh_string)
   else:
     length_sorted_punctuation = sorted(punctuation, key=len, reverse=True)
