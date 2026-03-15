@@ -95,6 +95,24 @@ my_punctuation = pyer.special_tokens | {'†', '‡'}
 pinyin = pyer.get_pinyin('你好', zh_dict, punctuation=my_punctuation)
 ```
 
+## Performance
+
+Benchmarked against v1.0.3 (PyPI) on the Shadowrun Returns Chinese corpus (~100k words):
+
+**Default punctuation** (precompiled regex):
+
+|                    | v2.0.0 | v1.0.3 | Speedup        |
+|--------------------|--------|--------|----------------|
+| Avg over 10 runs   | 0.071s | 0.305s | 4.3x faster    |
+| Per entry           | 0.011ms| 0.046ms| 4.2x faster    |
+
+**Custom punctuation** (regex built per call):
+
+|                    | v2.0.0 | v1.0.3 | Speedup        |
+|--------------------|--------|--------|----------------|
+| Avg over 10 runs   | 0.128s | 0.305s | 2.4x faster    |
+| Per entry           | 0.019ms| 0.046ms| 2.4x faster    |
+
 ## Dependencies
 
 - [rjieba](https://github.com/messense/rjieba) (>= 0.2.0) — Chinese text segmentation (Rust implementation of Jieba)

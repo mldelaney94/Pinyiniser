@@ -21,23 +21,30 @@ special_tokens = {
   '$', '￥', '£', '€'
 }
 
+# Precompiled regex and sorted list for the default special_tokens
+_sorted_special_tokens = sorted(special_tokens, key=len, reverse=True)
+_special_tokens_pattern = re.compile(
+  f"({'|'.join(re.escape(item) for item in _sorted_special_tokens)})"
+)
+
 # returns a tuple, the result of calling rjieba on the string,
 # and the result of parsing that result through a dictionary,
 # word by word, to get the pinyin
 def get_segments_and_pinyin(
   zh_string,
   zh_dict,
-  punctuation=special_tokens
+  punctuation=None
 ) -> tuple[list[str], list[str]]:
+  punct_set = special_tokens if punctuation is None else punctuation
   sentence_splits = split_on_punctuation(zh_string, punctuation)
 
   token_collection = []
   pinyin = []
   for fragment in sentence_splits:
-    if fragment not in punctuation:
+    if fragment not in punct_set:
       tokens = tuple(rjieba.cut(fragment))
       token_collection.extend(tokens)
-      pinyin.extend(get_pinyin_for_tokens(tokens, zh_dict, punctuation))
+      pinyin.extend(get_pinyin_for_tokens(tokens, zh_dict, punct_set))
     else:
       token_collection.append(fragment)
       pinyin.append(fragment)
@@ -46,7 +53,7 @@ def get_segments_and_pinyin(
 
 def get_pinyin(zh_string,
   zh_dict,
-  punctuation=special_tokens
+  punctuation=None
 ) -> list[str]:
   _, pinyin = get_segments_and_pinyin(zh_string, zh_dict, punctuation)
   return pinyin
@@ -71,10 +78,13 @@ def get_pinyin_for_tokens(
 
   return pinyin
 
-def split_on_punctuation(zh_string, punctuation=special_tokens):
-  length_sorted_punctuation = sorted(punctuation, key=len, reverse=True)
-  escaped_punctuation = [re.escape(item) for item in length_sorted_punctuation]
-  split_string = re.split(f"({'|'.join(escaped_punctuation)})", zh_string)
+def split_on_punctuation(zh_string, punctuation=None):
+  if punctuation is None:
+    split_string = _special_tokens_pattern.split(zh_string)
+  else:
+    length_sorted_punctuation = sorted(punctuation, key=len, reverse=True)
+    escaped_punctuation = [re.escape(item) for item in length_sorted_punctuation]
+    split_string = re.split(f"({'|'.join(escaped_punctuation)})", zh_string)
 
   # re.split produces empty strings if two pieces of punctuation are next to each other
   return [s for s in split_string if s]
