@@ -5,6 +5,9 @@ skip = {'說 说 [shui4] ',
         '打 打 [da2] ',
         '嗎 吗 [ma2] ',
         '么 幺 [yao1] ',
+        '這 这 [zhèi] ',
+        '會 会 [kuai4] ',
+        '看 看 [kan1] ',
         '都 都 [du1] '}
 
 rare_markers = {
