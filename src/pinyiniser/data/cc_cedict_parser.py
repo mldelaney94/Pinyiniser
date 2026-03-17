@@ -30,21 +30,29 @@ def get_parts_of_line(line):
   trad, simp, pinyin = chinese.split(' ', 2)
   pinyin = prep_pinyin(pinyin)
 
-  parts[simp.strip()] = {'pinyin': pinyin}
-  parts[trad.strip()] = {'pinyin': pinyin}
+  is_rare = False
+  for marker in rare_markers:
+    if marker in english:
+      is_rare = True
+      break
+
+  parts[simp.strip()] = {'pinyin': pinyin, 'is_rare': is_rare }
+  parts[trad.strip()] = {'pinyin': pinyin, 'is_rare': is_rare }
 
   return parts
 
 def prep_pinyin(pinyin):
   return pinyin.strip('[] ').lower()
 
-#no return deliberately
+#mutate dictionary in place
 def add_entry(parts, dictionary):
   for key in parts:
-    if key not in dictionary:
+    if key not in dictionary or dictionary[key]['is_rare'] is True:
       dictionary[key] = parts[key]
 
 if __name__ == "__main__":
   from pinyin_skip import skip
+  from pinyin_skip import rare_markers
 else:
   from .pinyin_skip import skip
+  from .pinyin_skip import rare_markers
