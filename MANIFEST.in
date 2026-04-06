@@ -1,2 +1,2 @@
 recursive-include src/pinyiniser/data *.u8 *.txt *.py
-scripts
+prune scripts
