@@ -1,7 +1,7 @@
 """For all those words that have multiple pronunciations, we remove the rarer
 one"""
 
-skip = {'說 说 [shui4] ',
+skip: set[str] = {'說 说 [shui4] ',
         '打 打 [da2] ',
         '嗎 吗 [ma2] ',
         '么 幺 [yao1] ',
@@ -12,7 +12,7 @@ skip = {'說 说 [shui4] ',
         '這 这 [zhei4] ',
         '着 着 [zhuo2] '}
 
-rare_markers = {
+rare_markers: set[str] = {
   "surname",
   "(archaic)",
   "variant of",

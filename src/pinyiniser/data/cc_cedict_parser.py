@@ -6,24 +6,30 @@
 This leaves things flexible if want to have the English definition
 too
 """
-import sys
+from __future__ import annotations
 
-def parse_dict(path):
+from os import PathLike
+from pathlib import Path
+from typing import Literal
+
+from ..types import ZhDict, ZhEntry, ZhParts
+
+def parse_dict(path: Path | PathLike[str]) -> ZhDict:
   #make each line into a dictionary
   with open(path, 'r') as f:
     lines = f.readlines()
     return parse_lines(lines)
 
-def parse_lines(lines):
-  dictionary = {}
+def parse_lines(lines: list[str]) -> ZhDict:
+  dictionary: ZhDict = {}
   for line in lines:
     parts = get_parts_of_line(line)
     add_entry(parts, dictionary)
 
   return dictionary
 
-def get_parts_of_line(line):
-  parts = {}
+def get_parts_of_line(line: str) -> ZhParts | Literal['']:
+  parts: ZhParts = {}
   chinese, english = line.split('/', 1)
   if chinese in skip:
     return ''
@@ -36,16 +42,17 @@ def get_parts_of_line(line):
       is_rare = True
       break
 
-  parts[simp.strip()] = {'pinyin': pinyin, 'is_rare': is_rare }
-  parts[trad.strip()] = {'pinyin': pinyin, 'is_rare': is_rare }
+  entry: ZhEntry = {'pinyin': pinyin, 'is_rare': is_rare}
+  parts[simp.strip()] = entry
+  parts[trad.strip()] = entry
 
   return parts
 
-def prep_pinyin(pinyin):
+def prep_pinyin(pinyin: str) -> str:
   return pinyin.strip('[] ').lower()
 
 #mutate dictionary in place
-def add_entry(parts, dictionary):
+def add_entry(parts: ZhParts | Literal[''], dictionary: ZhDict) -> None:
   for key in parts:
     if key not in dictionary or dictionary[key]['is_rare'] is True:
       dictionary[key] = parts[key]

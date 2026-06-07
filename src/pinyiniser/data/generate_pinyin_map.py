@@ -4,8 +4,9 @@ syllables. All combinations are included, even illegal ones.
 
 Result is written to pinyin_map.py.
 """
+from __future__ import annotations
 
-initials = [
+initials: list[str] = [
   '', 'b', 'p', 'm', 'f',
   'd', 't', 'n', 'l',
   'g', 'k', 'h',
@@ -15,7 +16,7 @@ initials = [
   'y', 'w',
 ]
 
-finals = {
+finals: dict[str, str] = {
   'iang1': 'iāng', 'iang2': 'iáng', 'iang3': 'iǎng', 'iang4': 'iàng', 'iang5': 'iang',
   'uang1': 'uāng', 'uang2': 'uáng', 'uang3': 'uǎng', 'uang4': 'uàng', 'uang5': 'uang',
   'iong1': 'iōng', 'iong2': 'ióng', 'iong3': 'iǒng', 'iong4': 'iòng', 'iong5': 'iong',
@@ -56,7 +57,7 @@ finals = {
 # The combining mark goes on the tone-bearing consonant:
 #   (prefix, tone_bearer, suffix)
 # e.g. 'ng' → mark on 'n', then 'g' after
-standalone_shapes = {
+standalone_shapes: dict[str, tuple[str, str, str]] = {
   'm':   ('', 'm', ''),
   'n':   ('', 'n', ''),
   'r':   ('', 'r', ''),
@@ -65,7 +66,7 @@ standalone_shapes = {
   'hng': ('h', 'n', 'g'),
 }
 
-combining_marks = {
+combining_marks: dict[str, str] = {
   '1': '\u0304',  # macron  ̄
   '2': '\u0301',  # acute   ́
   '3': '\u030C',  # caron   ̌
@@ -74,7 +75,7 @@ combining_marks = {
 }
 
 
-def generate():
+def generate() -> None:
   pinyin_map = {}
 
   for initial in initials:

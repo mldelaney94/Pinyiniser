@@ -1,12 +1,19 @@
-import rjieba
+from __future__ import annotations
+
 import re
+from collections.abc import Iterable, Set
+from os import PathLike
 from pathlib import Path
+
+import rjieba
+
+from .types import ZhDict
 
 curr_dir = Path(__file__).parent
 numeric_dict = curr_dir / 'data' / 'cedict_ts_numerals.u8'
 diacritic_dict = curr_dir / 'data' / 'cedict_ts_diacritics.u8'
 
-special_tokens = {
+special_tokens: Set[str] = {
   #Chinese special chars
   '？', '，', '！', '。', '；', '“', '”', '：', '–', '—', '＊',
   '…', '、', '～', '－', '（', '）', '─', '＜', '＞', '．', '《', '》',
@@ -31,9 +38,9 @@ _special_tokens_pattern = re.compile(
 # and the result of parsing that result through a dictionary,
 # word by word, to get the pinyin
 def get_segments_and_pinyin(
-  zh_string,
-  zh_dict,
-  punctuation=None
+  zh_string: str,
+  zh_dict: ZhDict,
+  punctuation: Set[str] | None = None,
 ) -> tuple[list[str], list[str]]:
   if punctuation is None:
     punctuation = special_tokens
@@ -43,7 +50,7 @@ def get_segments_and_pinyin(
   pinyin = []
   for fragment in sentence_splits:
     if fragment not in punctuation:
-      tokens = tuple(rjieba.cut(fragment))
+      tokens = tuple[str, ...](rjieba.cut(fragment))
       token_collection.extend(tokens)
       pinyin.extend(get_pinyin_for_tokens(tokens, zh_dict, punctuation))
     else:
@@ -52,17 +59,18 @@ def get_segments_and_pinyin(
 
   return ( token_collection, pinyin )
 
-def get_pinyin(zh_string,
-  zh_dict,
-  punctuation=None
+def get_pinyin(
+  zh_string: str,
+  zh_dict: ZhDict,
+  punctuation: Set[str] | None = None,
 ) -> list[str]:
   _, pinyin = get_segments_and_pinyin(zh_string, zh_dict, punctuation)
   return pinyin
 
 def get_pinyin_for_tokens(
-  tokens,
-  zh_dict,
-  punctuation
+  tokens: Iterable[str],
+  zh_dict: ZhDict,
+  punctuation: Set[str],
 ) -> list[str]:
   pinyin = []
   for token in tokens:
@@ -79,7 +87,10 @@ def get_pinyin_for_tokens(
 
   return pinyin
 
-def split_on_punctuation(zh_string, punctuation=special_tokens):
+def split_on_punctuation(
+  zh_string: str,
+  punctuation: Set[str] = special_tokens,
+) -> list[str]:
   if punctuation is special_tokens:
     split_string = _special_tokens_pattern.split(zh_string)
   else:
@@ -90,12 +101,12 @@ def split_on_punctuation(zh_string, punctuation=special_tokens):
   # re.split produces empty strings if two pieces of punctuation are next to each other
   return [s for s in split_string if s]
 
-def get_dictionary(numeric=True):
+def get_dictionary(numeric: bool = True) -> ZhDict:
   if not numeric:
     return parse_dict(diacritic_dict)
   return parse_dict(numeric_dict)
 
-def parse_dict(path):
+def parse_dict(path: Path | PathLike[str]) -> ZhDict:
   return cc_cedict_parser.parse_dict(path)
 
 if __name__ == '__main__':

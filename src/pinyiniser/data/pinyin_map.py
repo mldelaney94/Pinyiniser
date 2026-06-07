@@ -1,4 +1,4 @@
-pinyin_map = {
+pinyin_map: dict[str, str] = {
   'a1': 'ā',
   'a2': 'á',
   'a3': 'ǎ',

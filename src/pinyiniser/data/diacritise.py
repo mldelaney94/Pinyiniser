@@ -1,6 +1,8 @@
+from __future__ import annotations
+
 from pinyin_map import pinyin_map
 
-def numerals_to_diacritics ():
+def numerals_to_diacritics() -> None:
   with open('cedict_ts.u8', 'r') as f:
     with open('cedict_ts_diacritics.u8', 'w+') as g:
       for line in f:
@@ -13,10 +15,10 @@ def numerals_to_diacritics ():
         g.write(trad + ' ' + simp + ' [' + ''.join(pinyin) + '] /' +
           english)
 
-def prep_pinyin(pinyin):
+def prep_pinyin(pinyin: str) -> list[str]:
     return pinyin.strip('[] ').lower().split(' ')
 
-numeral_to_diacritic = {
+numeral_to_diacritic: dict[str, str] = {
   'iang1': 'iāng', 'iang2': 'iáng', 'iang3': 'iǎng', 'iang4': 'iàng', 'iang5': 'iang',
   'uang1': 'uāng', 'uang2': 'uáng', 'uang3': 'uǎng', 'uang4': 'uàng', 'uang5': 'uang',
   'iong1': 'iōng', 'iong2': 'ióng', 'iong3': 'iǒng', 'iong4': 'iòng', 'iong5': 'iong',
