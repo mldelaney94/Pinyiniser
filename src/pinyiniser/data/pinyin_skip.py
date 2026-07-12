@@ -10,7 +10,9 @@ skip: set[str] = {'說 说 [shui4] ',
         '看 看 [kan1] ',
         '都 都 [du1] ',
         '這 这 [zhei4] ',
-        '着 着 [zhuo2] '}
+        '着 着 [zhuo2] ',
+        '將 将 [jiang4] ',
+        '將 将 [qiang1] '}
 
 rare_markers: set[str] = {
   "surname",
